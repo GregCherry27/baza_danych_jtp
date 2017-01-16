@@ -16,9 +16,10 @@ void usunProdukt(int productID);
 void edytujProdukt(int productID);
 void wyszukajProdukt(int id);
 void wyszukajProdukt(string nazwa);
-void wyszukajProdukt(float cena;
+void wyszukajProdukt(float cena);
 void wczytaj_z_pliku();
 void zapisz_do_pliku();
+void dodaj_do_piku();
 
  int ID = 0;
 
@@ -37,13 +38,15 @@ int main()
 {
 	int x;
 	int id;
-
+	char wybor;
+	string nazwa;
+	float cena;
 
 	do {
 
 
 		cout << "*~~~~BAZA PRODUKTOW~~~~*" << endl;
-		cout << " 1 - wyswietl produkty\n 2 - dodaj produkt\n 3 - usun produkt\n 4 - edytuj produkt\n 5 - wczytaj dane z pliku\n 6 - wyjdz\n" << endl;
+		cout << " [1] - wyswietl produkty\n [2] - dodaj produkt\n [3] - usun produkt\n [4] - edytuj produkt\n [5] - wczytaj dane z pliku\n [6] - zapisz baze do pliku\n [7] - dodaj produkt do pliku\n [8] - wyszukaj produkt\n [9] - wyjdz\n" << endl;
 
 		cin >> x;
 		system("cls");
@@ -76,12 +79,43 @@ int main()
 			wczytaj_z_pliku();
 			break;
 		case 6:
-			return 6;
+			zapisz_do_pliku();
+			break;
+		case 7:
+			dodaj_do_piku();
+			break;
+		case 8:
+			cout << "wybierz kryterium wyszukwiania: i - ID | n - nazwa | c - cena\n";
+			cin >> wybor;
+			if (wybor == 'i')
+			{
+				cout << "podaj ID produktu ktorego szukasz: ";
+				cin >> id;
+				cout << endl;
+				wyszukajProdukt(id);
+			}
+			else if (wybor == 'n')
+			{
+				cout << "podaj nazwe produktu ktorego szukasz: ";
+				cin >> nazwa;
+				cout << endl;
+				wyszukajProdukt(nazwa);
+			}
+			else if (wybor == 'c')
+			{
+				cout << "podaj cene produktu ktorego szukasz: ";
+				cin >> cena;
+				cout << endl;
+				wyszukajProdukt(cena);
+			}
+			break;
+		case 9:
+			return 9;
 		default:
 			cout << "Wybierz opcje od 1 do 9!" << endl << endl;
 		}
 
-	} while (x != 6);
+	} while (x != 9);
 
 
 	return 0;
@@ -213,15 +247,9 @@ void zapisz_do_pliku()
 
 		plik.open("plik.txt", ios::app);
 
-		for (int i = 0; i < dane.size(); i++)
+		for (int i = 0; i < ID; i++)
 		{
-			while (!plik.eof())
-			{
-				for (int i = 0; i < dane.size(); i++)
-				{
-					plik >> dane[i].id >> "\t" >> dane[i].name >> "\t" >> dane[i].price >> "\n";
-				}
-			}
+			plik << "\n" << dane[i].id << "\t" << dane[i].name << "\t" << dane[i].price;
 		}
 		plik.close();
 	}
@@ -282,4 +310,23 @@ void wyszukajProdukt(float cena)
 			}
 		}
 	}
+}
+
+void dodaj_do_piku()
+{
+	Produkt new_product;
+
+	cout << "Podaj nazwe produktu: ";
+	cin >> new_product.name;
+
+	cout << "Podaj cene produktu: ";
+	cin >> new_product.price;
+	cout << endl << endl;
+
+	new_product.id = ID;
+	ID++;
+
+	plik.open("dane.txt", ios::app);
+	plik << "\n" << new_product.id << "\t" << new_product.name << "\t" << new_product.price;
+	plik.close();
 }
