@@ -65,15 +65,29 @@ int main()
 			break;
 		case 3:
 			wyswietlProdukty();
+			if (dane.empty())
+			{
+				
+			}
+			else
+			{
 				cout << "Podaj ID produktu do usuniecia: ";
 				cin >> id;
 				usunProdukt(id);
+			}
 			break;
 		case 4:
 			wyswietlProdukty();
+			if (dane.empty())
+			{
+
+			}
+			else
+			{
 				cout << "Podaj ID produktu do edycji: ";
 				cin >> id;
 				edytujProdukt(id);
+			}
 			break;
 		case 5:
 			wczytaj_z_pliku();
@@ -85,28 +99,35 @@ int main()
 			dodaj_do_piku();
 			break;
 		case 8:
-			cout << "wybierz kryterium wyszukwiania: i - ID | n - nazwa | c - cena\n";
-			cin >> wybor;
-			if (wybor == 'i')
+			if (dane.empty())
 			{
-				cout << "podaj ID produktu ktorego szukasz: ";
-				cin >> id;
-				cout << endl;
-				wyszukajProdukt(id);
+				cout << "Baza jest pusta" << endl << endl;
 			}
-			else if (wybor == 'n')
+			else
 			{
-				cout << "podaj nazwe produktu ktorego szukasz: ";
-				cin >> nazwa;
-				cout << endl;
-				wyszukajProdukt(nazwa);
-			}
-			else if (wybor == 'c')
-			{
-				cout << "podaj cene produktu ktorego szukasz: ";
-				cin >> cena;
-				cout << endl;
-				wyszukajProdukt(cena);
+				cout << "wybierz kryterium wyszukwiania: i - ID | n - nazwa | c - cena\n";
+				cin >> wybor;
+				if (wybor == 'i')
+				{
+					cout << "podaj ID produktu ktorego szukasz: ";
+					cin >> id;
+					cout << endl;
+					wyszukajProdukt(id);
+				}
+				else if (wybor == 'n')
+				{
+					cout << "podaj nazwe produktu ktorego szukasz: ";
+					cin >> nazwa;
+					cout << endl;
+					wyszukajProdukt(nazwa);
+				}
+				else if (wybor == 'c')
+				{
+					cout << "podaj cene produktu ktorego szukasz: ";
+					cin >> cena;
+					cout << endl;
+					wyszukajProdukt(cena);
+				}
 			}
 			break;
 		case 9:
@@ -123,11 +144,18 @@ int main()
 
 void wyswietlProdukty()
 {
-	for ( int i = 0; i < dane.size(); i++)
+	if (dane.empty())
 	{
-		cout << "ID: " << dane[i].id << "\tNazwa: " << dane[i].name << "\tCena[PLN]: " << dane[i].price << "\t" << endl;
+		cout << "Baza jest pusta" << endl << endl;
 	}
-	cout << endl;
+	else
+	{
+		for (int i = 0; i < dane.size(); i++)
+		{
+			cout << "ID: " << dane[i].id << "\tNazwa: " << dane[i].name << "\tCena[PLN]: " << dane[i].price << "\t" << endl;
+		}
+		cout << endl;
+	}
 
 }
 
@@ -154,12 +182,6 @@ void dodajProdukt()
 
 void usunProdukt( int productID)
 {
-	if (dane.empty())
-	{
-		cout << "Baza jest pusta" << endl;
-	}
-	else
-	{
 		for (int i = 0; i < dane.size(); i++)
 		{
 			if (dane[i].id == productID)
@@ -173,7 +195,6 @@ void usunProdukt( int productID)
 				cout << "\nNie znaleziono produktu o podanym ID!\n" << endl;
 			}
 		}
-	}
 }
 
 void edytujProdukt( int productID)
@@ -211,26 +232,35 @@ void edytujProdukt( int productID)
 
 void wczytaj_z_pliku()
 {
+	plik.open("plik.txt", ios::in);
 
-	plik.open("dane.txt", ios::in);
-
-	while (!plik.eof())
+	if (plik.good())
 	{
-		int a;
-		string b;
-		float c;
+		while (!plik.eof())
+		{
+			int a;
+			string b;
+			float c;
 
-		plik >> a >> b >> c;
+			plik >> a >> b >> c;
 
-		Produkt new_product;
-		new_product.id = a;
-		new_product.name = b;
-		new_product.price = c;
+			Produkt new_product;
+			new_product.id = a;
+			new_product.name = b;
+			new_product.price = c;
 
-		dane.push_back(new_product);
+			new_product.id = ID;
+			ID++;
+
+			dane.push_back(new_product);
+		}
+		plik.close();
+		cout << "wczytano dane z pliku" << endl << endl;
 	}
-	plik.close();
-	cout << "wczytano dane z pliku" << endl << endl;
+	else
+	{
+		cout << "Brak pliku!" << endl << endl;
+	}
 }
 
 void zapisz_do_pliku()
@@ -247,7 +277,7 @@ void zapisz_do_pliku()
 
 		plik.open("plik.txt", ios::app);
 
-		for (int i = 0; i < ID; i++)
+		for (int i = 0; i < dane.size(); i++)
 		{
 			plik << "\n" << dane[i].id << "\t" << dane[i].name << "\t" << dane[i].price;
 		}
@@ -316,6 +346,9 @@ void dodaj_do_piku()
 {
 	Produkt new_product;
 
+	new_product.id = ID;
+	ID++;
+
 	cout << "Podaj nazwe produktu: ";
 	cin >> new_product.name;
 
@@ -323,10 +356,9 @@ void dodaj_do_piku()
 	cin >> new_product.price;
 	cout << endl << endl;
 
-	new_product.id = ID;
-	ID++;
+	
 
-	plik.open("dane.txt", ios::app);
+	plik.open("plik.txt", ios::app);
 	plik << "\n" << new_product.id << "\t" << new_product.name << "\t" << new_product.price;
 	plik.close();
 }
