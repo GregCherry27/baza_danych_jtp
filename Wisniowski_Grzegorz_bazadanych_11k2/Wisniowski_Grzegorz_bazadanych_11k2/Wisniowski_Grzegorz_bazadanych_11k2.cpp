@@ -67,7 +67,7 @@ int main()
 			wyswietlProdukty();
 			if (dane.empty())
 			{
-				
+
 			}
 			else
 			{
@@ -99,36 +99,40 @@ int main()
 			dodaj_do_piku();
 			break;
 		case 8:
-			if (dane.empty())
-			{
-				cout << "Baza jest pusta" << endl << endl;
-			}
-			else
-			{
-				cout << "wybierz kryterium wyszukwiania: i - ID | n - nazwa | c - cena\n";
-				cin >> wybor;
-				if (wybor == 'i')
+				if (dane.empty())
 				{
-					cout << "podaj ID produktu ktorego szukasz: ";
-					cin >> id;
-					cout << endl;
-					wyszukajProdukt(id);
+					cout << "Baza jest pusta" << endl << endl;
 				}
-				else if (wybor == 'n')
+				else
 				{
-					cout << "podaj nazwe produktu ktorego szukasz: ";
-					cin >> nazwa;
-					cout << endl;
-					wyszukajProdukt(nazwa);
+					cout << "wybierz kryterium wyszukwiania: i - ID | n - nazwa | c - cena\n";
+					cin >> wybor;
+					if (wybor == 'i')
+					{
+						cout << "podaj ID produktu ktorego szukasz: ";
+						cin >> id;
+						cout << endl;
+						wyszukajProdukt(id);
+					}
+					else if (wybor == 'n')
+					{
+						cout << "podaj nazwe produktu ktorego szukasz: ";
+						cin >> nazwa;
+						cout << endl;
+						wyszukajProdukt(nazwa);
+					}
+					else if (wybor == 'c')
+					{
+						cout << "podaj cene produktu ktorego szukasz: ";
+						cin >> cena;
+						cout << endl;
+						wyszukajProdukt(cena);
+					}
+					else if (wybor != 'i' || wybor != 'n' || wybor != 'c')
+					{
+						cout << "nie wybrales wlasciwie kryterium" << endl;
+					}
 				}
-				else if (wybor == 'c')
-				{
-					cout << "podaj cene produktu ktorego szukasz: ";
-					cin >> cena;
-					cout << endl;
-					wyszukajProdukt(cena);
-				}
-			}
 			break;
 		case 9:
 			return 9;
@@ -175,9 +179,9 @@ void dodajProdukt()
 
 	dane.push_back(new_product);
 
-	plik.open("dane.txt", ios::app);
+	/*plik.open("dane.txt", ios::app);
 	plik << new_product.id << "\t" << new_product.name << "\t" << new_product.price << "\n";
-	plik.close();
+	plik.close();*/
 }
 
 void usunProdukt( int productID)
@@ -189,22 +193,22 @@ void usunProdukt( int productID)
 				dane.erase(dane.begin() + i);
 
 				cout << "Produkt zostal usuniety" << endl << endl;
-			}
-			else
-			{
-				cout << "\nNie znaleziono produktu o podanym ID!\n" << endl;
+				return;
 			}
 		}
+
+		cout << "\nNie znaleziono produktu o podanym ID!\n" << endl;
 }
 
 void edytujProdukt( int productID)
 {
+	//int f = dane.size();
 	if (dane.empty())
 	{
 		cout << "Baza jest pusta" << endl << endl;
 		return;
 	}
-	else
+	else if(!dane.empty())
 	{
 		for (int i = 0; i < dane.size(); i++)
 		{
@@ -216,17 +220,9 @@ void edytujProdukt( int productID)
 				cout << "Podaj nowa cene produktu: ";
 				cin >> dane[i].price;
 
-				for (int i = 0; i < dane.size(); i++)
-				{
-					plik << dane[i].id << "\t" << dane[i].name << "\t" << dane[i].price << "\n";
-				}
-				plik.close();
-
 				cout << endl << endl;
-				return;
 			}
 		}
-		cout << "\nNie znaleziono produktu o podanym ID!\n" << endl;
 	}
 }
 
@@ -243,16 +239,16 @@ void wczytaj_z_pliku()
 			float c;
 
 			plik >> a >> b >> c;
+			
+				Produkt new_product;
+				new_product.id = a;
+				new_product.name = b;
+				new_product.price = c;
 
-			Produkt new_product;
-			new_product.id = a;
-			new_product.name = b;
-			new_product.price = c;
+				new_product.id = ID;
+				ID++;
 
-			new_product.id = ID;
-			ID++;
-
-			dane.push_back(new_product);
+				dane.push_back(new_product);
 		}
 		plik.close();
 		cout << "wczytano dane z pliku" << endl << endl;
@@ -303,6 +299,7 @@ void wyszukajProdukt(int id)
 		}
 	}
 }
+	
 
 void wyszukajProdukt(string nazwa)
 {
