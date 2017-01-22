@@ -19,7 +19,8 @@ void wyszukajProdukt(string nazwa);
 void wyszukajProdukt(float cena);
 void wczytaj_z_pliku();
 void zapisz_do_pliku();
-void dodaj_do_piku();
+//void dodaj_do_piku();
+void usun_produkty();
 
  int ID = 0;
 
@@ -42,11 +43,13 @@ int main()
 	string nazwa;
 	float cena;
 
+	wczytaj_z_pliku();
+
 	do {
+		//[7] - dodaj produkt do pliku
 
-
-		cout << "*~~~~BAZA PRODUKTOW~~~~*" << endl;
-		cout << " [1] - wyswietl produkty\n [2] - dodaj produkt\n [3] - usun produkt\n [4] - edytuj produkt\n [5] - wczytaj dane z pliku\n [6] - zapisz baze do pliku\n [7] - dodaj produkt do pliku\n [8] - wyszukaj produkt\n [9] - wyjdz\n" << endl;
+		cout << " *~~~~BAZA PRODUKTOW~~~~*" << endl;
+		cout << " [1] - wyswietl produkty\n [2] - dodaj produkt\n [3] - usun produkt\n [4] - edytuj produkt\n [5] - usun wszystkie produkty\n [6] - zapisz baze do pliku\n [8] - wyszukaj produkt\n [9] - wyjdz\n" << endl;
 
 		cin >> x;
 		system("cls");
@@ -90,13 +93,13 @@ int main()
 			}
 			break;
 		case 5:
-			wczytaj_z_pliku();
+			usun_produkty();
 			break;
 		case 6:
 			zapisz_do_pliku();
 			break;
 		case 7:
-			dodaj_do_piku();
+			//dodaj_do_piku();
 			break;
 		case 8:
 				if (dane.empty())
@@ -178,10 +181,6 @@ void dodajProdukt()
 	ID++;
 
 	dane.push_back(new_product);
-
-	/*plik.open("dane.txt", ios::app);
-	plik << new_product.id << "\t" << new_product.name << "\t" << new_product.price << "\n";
-	plik.close();*/
 }
 
 void usunProdukt( int productID)
@@ -202,7 +201,6 @@ void usunProdukt( int productID)
 
 void edytujProdukt( int productID)
 {
-	//int f = dane.size();
 	if (dane.empty())
 	{
 		cout << "Baza jest pusta" << endl << endl;
@@ -278,6 +276,7 @@ void zapisz_do_pliku()
 			plik << "\n" << dane[i].id << "\t" << dane[i].name << "\t" << dane[i].price;
 		}
 		plik.close();
+		cout << "Zapisano do pliku" << endl << endl;
 	}
 }
 
@@ -339,23 +338,37 @@ void wyszukajProdukt(float cena)
 	}
 }
 
-void dodaj_do_piku()
+//void dodaj_do_piku()
+//{
+//	Produkt new_product;
+//
+//	new_product.id = ID;
+//	ID++;
+//
+//	cout << "Podaj nazwe produktu: ";
+//	cin >> new_product.name;
+//
+//	cout << "Podaj cene produktu: ";
+//	cin >> new_product.price;
+//	cout << endl << endl;
+//
+//	
+//
+//	plik.open("plik.txt", ios::app);
+//	plik << "\n" << new_product.id << "\t" << new_product.name << "\t" << new_product.price;
+//	plik.close();
+//}
+
+void usun_produkty()
 {
-	Produkt new_product;
+		dane.clear();
 
-	new_product.id = ID;
-	ID++;
-
-	cout << "Podaj nazwe produktu: ";
-	cin >> new_product.name;
-
-	cout << "Podaj cene produktu: ";
-	cin >> new_product.price;
-	cout << endl << endl;
-
-	
-
-	plik.open("plik.txt", ios::app);
-	plik << "\n" << new_product.id << "\t" << new_product.name << "\t" << new_product.price;
-	plik.close();
+	if (dane.empty())
+	{
+		cout << "Produkty zostaly usuniete" << endl << endl;
+	}
+	else
+	{
+		cout << "Cos sie zjebalo" << endl;
+	}
 }

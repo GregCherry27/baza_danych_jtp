@@ -1,0 +1,10 @@
+0	Kredki	12.99
+1	Linijka	2.99
+3	Dlugopis	3.49
+4	Zeszyt	5.55
+5	Notes	4.79
+6	Spinacz	0.10
+7	Gumka	1.09
+8	Zakreslacz	1.49
+9	Cygaro	89.49
+10	Zapalki	2.45
