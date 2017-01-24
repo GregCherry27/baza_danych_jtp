@@ -243,7 +243,7 @@ void wczytaj_z_pliku()
 				new_product.name = b;
 				new_product.price = c;
 
-				new_product.id = ID;
+				ID = new_product.id;
 				ID++;
 
 				dane.push_back(new_product);
@@ -338,27 +338,6 @@ void wyszukajProdukt(float cena)
 	}
 }
 
-//void dodaj_do_piku()
-//{
-//	Produkt new_product;
-//
-//	new_product.id = ID;
-//	ID++;
-//
-//	cout << "Podaj nazwe produktu: ";
-//	cin >> new_product.name;
-//
-//	cout << "Podaj cene produktu: ";
-//	cin >> new_product.price;
-//	cout << endl << endl;
-//
-//	
-//
-//	plik.open("plik.txt", ios::app);
-//	plik << "\n" << new_product.id << "\t" << new_product.name << "\t" << new_product.price;
-//	plik.close();
-//}
-
 void usun_produkty()
 {
 		dane.clear();
@@ -369,6 +348,6 @@ void usun_produkty()
 	}
 	else
 	{
-		cout << "Cos sie zjebalo" << endl;
+		cout << "Error" << endl;
 	}
 }

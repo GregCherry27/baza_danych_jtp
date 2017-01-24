@@ -1,10 +1,5 @@
 
-0	Kredki	12.99
-1	Linijka	2.99
-2	Dlugopis	3.49
-5	Spinacz	0.1
-6	Gumka	1.09
-7	Zakreslacz	1.49
-8	Cygaro	89.49
-9	kupa	55
-10	prezerwatywa	11
+5	Gumka	1.09
+7	Cygaro	89.49
+8	Zapalki	2.45
+9	dfgdfg	3453
